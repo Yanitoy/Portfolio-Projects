@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Brian Rey Vargas</title>
+  <meta name="description" content="Portfolio of Brian Rey Vargas — freelance web developer crafting professional, performant, and accessible web experiences." />
+  <meta name="theme-color" content="#1f2933" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Brian Rey Vargas — Web Developer" />
+  <meta property="og:description" content="Professional, performant, and accessible web experiences." />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Header / Navigation -->
+  <header>
+    <nav id="navbar" role="navigation" aria-label="Primary">
+      <ul class="nav">
+        <li><a href="#freecodecamp-section" class="nav-link" aria-current="page">FreeCodeCamp</a></li>
+        <li><a href="#projects" class="nav-link">Personal Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Intro -->
+    <section id="intro" class="section">
+      <h1>My Projects</h1>
+      <p>Welcome to my project portfolio! Here you'll find a selection of my work, showcasing my skills and creativity in web development.</p>
+    </section>
+
+    <!-- FreeCodeCamp Projects -->
+    <section id="freecodecamp-section" class="section">
+      <h2>FreeCodeCamp Projects</h2>
+      <p>These are my FreeCodeCamp projects.</p>
+
+      <div class="grid projects">
+        <article class="project-tile">
+          <figure>
+            <img src="images/sample-form.jpg" alt="Preview of the Sample Form Prototype project" class="project-img" loading="lazy" />
+            <figcaption>Sample Form Prototype</figcaption>
+          </figure>
+          <h3>Featured Project</h3>
+          <p>A responsive form layout demonstrating semantic HTML and accessible labels.</p>
+          <a href="https://your-form-url.example" target="_blank" rel="noopener noreferrer">View Project</a>
+        </article>
+
+        <article class="project-tile">
+          <figure>
+            <img src="images/cat-image.jpg" alt="Preview of Cat Image project with styled figure and caption" class="project-img" loading="lazy" />
+            <figcaption>Cat Image</figcaption>
+          </figure>
+          <h3>Featured Project</h3>
+          <p>Image semantics &amp; captions with responsive styling.</p>
+          <a href="https://your-cat-url.example" target="_blank" rel="noopener noreferrer">View Project</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Personal Projects -->
+    <section id="projects" class="section">
+      <h2>Personal Projects</h2>
+
+      <div class="grid projects">
+        <article class="project-tile">
+          <figure>
+            <img src="images/placeholder-personal.jpg" alt="Placeholder preview for personal project" class="project-img" loading="lazy" />
+            <figcaption>Coming Soon</figcaption>
+          </figure>
+          <h3>Featured Project</h3>
+          <p>No content yet</p>
+          <a href="#" aria-disabled="true">View Project</a>
+        </article>
+
+        <article class="project-tile">
+          <figure>
+            <img src="images/credly-badges.jpg" alt="Preview of Credly badge collection" class="project-img" loading="lazy" />
+            <figcaption>Credly Badges</figcaption>
+          </figure>
+          <h3>Project</h3>
+          <p>Certification badges and progress.</p>
+          <a href="https://www.credly.com/users/your-profile" target="_blank" rel="noopener noreferrer">View Project</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <h2>Contact Me</h2>
+      <p>If you'd like to get in touch, email me at
+        <a href="mailto:brianreyfuentesvargas@gmail.com">brianreyfuentesvargas@gmail.com</a>.
+      </p>
+      <p>Or call me at <a href="tel:+639151375883">+63 915 137 5883</a></p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Connect with me:</p>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/brian-rey-vargas-ab4503141/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" class="icon" loading="lazy" />
+      </a>
+      <a href="https://github.com/Yanitoy" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="icon" loading="lazy" />
+      </a>
+      <a href="#contact" aria-label="Email">
+        <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Email" class="icon" loading="lazy" />
+      </a>
+    </div>
+    <p><span id="year"></span> &copy; Brian Rey Vargas</p>
+  </footer>
+
+  <script>
+    // Move to script.js if preferred
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Optional: set aria-current on nav based on hash
+    const links = document.querySelectorAll('.nav-link');
+    function setCurrent() {
+      const hash = window.location.hash || '#freecodecamp-section';
+      links.forEach(a => a.removeAttribute('aria-current'));
+      const active = Array.from(links).find(a => a.getAttribute('href') === hash);
+      if (active) active.setAttribute('aria-current', 'page');
+    }
+    window.addEventListener('hashchange', setCurrent);
+    setCurrent();
+  </script>
+  <script src="script.js" defer></script>
+</body>
+</html>
