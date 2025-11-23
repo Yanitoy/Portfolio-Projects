@@ -9,6 +9,7 @@ let foundations = [[], [], [], []]; // 4 suit piles
 let tableau = [[], [], [], [], [], [], []];
 
 let selected = null; // { type, pileIndex, cardIndex? }
+let dragMeta = null; // current drag metadata
 let statusTextEl;
 let stockEl, wasteEl, foundationEls, tableauEls;
 
@@ -22,6 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("new-game-btn").addEventListener("click", newGame);
   stockEl.addEventListener("click", onStockClick);
+  enableDropTargets();
 
   newGame();
 });
@@ -195,9 +197,139 @@ function createCardElement(cardOrNull, meta) {
     cardEl.dataset.pileIndex = meta.pileIndex;
     cardEl.dataset.cardIndex = meta.cardIndex;
     cardEl.addEventListener("click", onCardClick);
+    if (!cardOrNull.faceDown) {
+      cardEl.draggable = true;
+      cardEl.addEventListener("dragstart", onCardDragStart);
+      cardEl.addEventListener("dragend", onCardDragEnd);
+    }
   }
 
   return cardEl;
+}
+
+// ====== DRAG & DROP ======
+function enableDropTargets() {
+  tableauEls.forEach((el, idx) => {
+    el.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+    });
+    el.addEventListener("drop", (e) => {
+      e.preventDefault();
+      const meta = parseMetaFromTransfer(e);
+      if (!meta) return;
+      selected = meta;
+      removeDraggingHighlight();
+      tryMoveSelectedToTableau(idx);
+    });
+  });
+
+  foundationEls.forEach((el, idx) => {
+    el.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+    });
+    el.addEventListener("drop", (e) => {
+      e.preventDefault();
+      const meta = parseMetaFromTransfer(e);
+      if (!meta) return;
+      selected = meta;
+      removeDraggingHighlight();
+      tryMoveSelectedToFoundation(idx);
+    });
+  });
+}
+
+function onCardDragStart(e) {
+  const meta = getMetaFromElement(e.currentTarget);
+  if (!meta) {
+    e.preventDefault();
+    return;
+  }
+  const card = resolveCardFromMeta(meta);
+  if (!card || card.faceDown) {
+    e.preventDefault();
+    return;
+  }
+
+  selected = meta;
+  dragMeta = meta;
+  addDraggingHighlight(meta);
+
+  if (e.dataTransfer) {
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", JSON.stringify(meta));
+  }
+}
+
+function onCardDragEnd() {
+  dragMeta = null;
+  removeDraggingHighlight();
+  clearSelection();
+  renderAll();
+}
+
+function getMetaFromElement(el) {
+  const type = el.dataset.type;
+  if (!type) return null;
+  return {
+    type,
+    pileIndex: Number(el.dataset.pileIndex),
+    cardIndex: Number(el.dataset.cardIndex),
+  };
+}
+
+function parseMetaFromTransfer(e) {
+  if (!e.dataTransfer) return null;
+  const text = e.dataTransfer.getData("text/plain");
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+}
+
+function addDraggingHighlight(meta) {
+  removeDraggingHighlight();
+  if (meta.type === "tableau") {
+    const pileEl = tableauEls[meta.pileIndex];
+    pileEl
+      .querySelectorAll(".card")
+      .forEach((cardEl) => {
+        const idx = Number(cardEl.dataset.cardIndex);
+        if (idx >= meta.cardIndex) {
+          cardEl.classList.add("dragging");
+        }
+      });
+  } else {
+    document
+      .querySelectorAll(
+        `.card[data-type="${meta.type}"][data-pile-index="${meta.pileIndex}"]`
+      )
+      .forEach((cardEl) => cardEl.classList.add("dragging"));
+  }
+}
+
+function removeDraggingHighlight() {
+  document
+    .querySelectorAll(".card.dragging")
+    .forEach((el) => el.classList.remove("dragging"));
+}
+
+function resolveCardFromMeta(meta) {
+  if (meta.type === "waste") {
+    return waste[waste.length - 1];
+  }
+  if (meta.type === "foundation") {
+    const pile = foundations[meta.pileIndex];
+    return pile[pile.length - 1];
+  }
+  if (meta.type === "tableau") {
+    const col = tableau[meta.pileIndex];
+    return col[meta.cardIndex];
+  }
+  return null;
 }
 
 function formatRank(rank) {

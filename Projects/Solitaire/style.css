@@ -192,6 +192,12 @@ main {
   box-shadow: 0 16px 24px rgba(0, 0, 0, 0.6);
 }
 
+.card.dragging {
+  opacity: 0.9;
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.65);
+}
+
 .card.face-down {
   background: linear-gradient(135deg, #0f172a, #1f2937);
   border-color: #0f172a;
