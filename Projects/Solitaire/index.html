@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Solitaire (Klondike)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="back-bar">
+    <a class="back-btn" href="../../index.html" onclick="if (window.history.length > 1) { history.back(); return false; }">&larr; Back</a>
+  </div>
+  <div class="game-wrapper">
+    <header>
+      <h1>Solitaire</h1>
+      <div class="controls">
+        <button id="new-game-btn">New Game</button>
+        <span id="status-text"></span>
+      </div>
+    </header>
+
+    <main>
+      <div class="top-row">
+        <div class="pile-group">
+          <div id="stock" class="pile stock" title="Stock"></div>
+          <div id="waste" class="pile waste" title="Waste"></div>
+        </div>
+
+        <div class="pile-group foundations">
+          <div class="pile foundation" data-foundation="0" title="Foundation 1"></div>
+          <div class="pile foundation" data-foundation="1" title="Foundation 2"></div>
+          <div class="pile foundation" data-foundation="2" title="Foundation 3"></div>
+          <div class="pile foundation" data-foundation="3" title="Foundation 4"></div>
+        </div>
+      </div>
+
+      <div class="tableau-row">
+        <div class="pile tableau" data-tableau="0"></div>
+        <div class="pile tableau" data-tableau="1"></div>
+        <div class="pile tableau" data-tableau="2"></div>
+        <div class="pile tableau" data-tableau="3"></div>
+        <div class="pile tableau" data-tableau="4"></div>
+        <div class="pile tableau" data-tableau="5"></div>
+        <div class="pile tableau" data-tableau="6"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
