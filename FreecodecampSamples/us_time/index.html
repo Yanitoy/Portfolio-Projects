@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>US State Clocks Based on Philippine Time</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="back-bar">
+    <a class="back-btn" href="../../index.html" onclick="if (window.history.length > 1) { history.back(); return false; }">← Back</a>
+  </div>
+  <header class="app-header">
+    <h1>US State Clocks</h1>
+    <p>Times are calculated based on <strong>Philippine Time (PHT / UTC+8)</strong>.</p>
+  </header>
+
+  <main>
+    <section class="pht-section">
+      <div class="pht-card">
+        <h2>Philippines (PHT)</h2>
+        <p class="pht-label">Manila · UTC+8</p>
+        <div id="pht-clock" class="pht-time">--:--:--</div>
+      </div>
+    </section>
+
+    <section class="controls">
+      <input
+        type="text"
+        id="search"
+        placeholder="Search by state or capital..."
+        autocomplete="off"
+      />
+      <select id="timeZoneFilter">
+        <option value="all">All time zones</option>
+        <option value="EST">Eastern (EST)</option>
+        <option value="CST">Central (CST)</option>
+        <option value="MST">Mountain (MST)</option>
+        <option value="PST">Pacific (PST)</option>
+        <option value="AKST">Alaska (AKST)</option>
+        <option value="HST">Hawaii (HST)</option>
+      </select>
+    </section>
+
+    <section>
+      <div id="clock-grid" class="clock-grid">
+        <!-- Cards will be injected by script.js -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>
+      Clocks are based on fixed offsets from PHT (no daylight saving time adjustments).
+    </small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
